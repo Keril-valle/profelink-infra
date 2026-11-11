@@ -1,0 +1,18 @@
+# Alternativa local: combina este archivo con compose.yaml.
+# No modifica ni etiqueta de nuevo las imágenes públicas de Docker Hub.
+services:
+  api:
+    image: profelink-api:local
+    build:
+      context: ${BACKEND_CONTEXT:-../Back-Proyecto2}
+      dockerfile: Dockerfile
+  web:
+    image: profelink-web:local
+    build:
+      context: ${FRONTEND_CONTEXT:-../kahoot_front_grupo2}
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:-}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:-}
+        VITE_USE_MOCKS: ${VITE_USE_MOCKS:-false}

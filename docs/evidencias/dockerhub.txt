@@ -1,0 +1,5 @@
+﻿Docker Hub consultado el 2026-11-11 (API pública, sin publicar nada):
+- keril777/profelink-api:v1: existe (última actualización 2026-11-08).
+- No se encontró una imagen ProfeLink de frontend en las repos públicas consultadas.
+- Imágenes locales construidas: profelink-api:local, profelink-web:local.
+- La publicación de versiones actuales queda pendiente de autorización del equipo; no se hizo push.

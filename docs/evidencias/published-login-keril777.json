@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-11T17:11:01.993Z",
+  "account": "keril777",
+  "publishedImagePair": true,
+  "frontendUrl": "http://127.0.0.1:8080/app/curso",
+  "mockBanner": false,
+  "apiResponseStatuses": [
+    200,
+    200,
+    200
+  ],
+  "authenticatedRestStatus": 200,
+  "sessionStatus": "FINISHED",
+  "participants": 30,
+  "screenshot": "published-dashboard-keril777.png",
+  "initialDashboardWaitTimedOut": true,
+  "retryWithNetworkSynchronizationPassed": true
+}

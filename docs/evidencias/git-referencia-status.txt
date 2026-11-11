@@ -1,0 +1,10 @@
+﻿## persona-3-infra...origin/persona-3-infra [ahead 1, behind 3]
+M  .env.example
+A  .gitattributes
+M  README.md
+A  db/init/01_create_payments.sql
+A  db/init/02_orders_and_deferred.sql
+A  docker-compose.build.yml
+M  docker-compose.yml
+M  run.ps1
+M  run.sh

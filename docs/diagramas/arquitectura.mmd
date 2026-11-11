@@ -1,0 +1,16 @@
+flowchart TB
+  U["Profesor / estudiante<br/>navegador"] -->|"HTTP local"| FE
+  RV["Cliente REST independiente<br/>HTML + JS :5174"] -->|"REST"| API
+
+  subgraph DOCKER["Docker Compose del proyecto"]
+    FE["Frontend React + Vite<br/>:8080 Docker / :5173 dev"]
+    API["API NestJS<br/>:3000"]
+    FE <-->|"REST + Socket.IO /sessions"| API
+  end
+
+  FE -->|"login"| AUTH["Supabase Auth"]
+  RV -->|"login"| AUTH
+  API -->|"SQL :5432 · red externa profelink-data"| DB[("PostgreSQL existente<br/>profelink-pg-test-answers<br/>Windows: 127.0.0.1:15433")]
+  API -->|"imágenes"| STORAGE["Supabase Storage"]
+  API -->|"chat opcional"| LLM["DeepSeek API"]
+  API -->|"OTLP"| OBS["Grafana Cloud / OTLP"]

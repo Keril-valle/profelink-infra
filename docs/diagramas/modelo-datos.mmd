@@ -1,0 +1,84 @@
+erDiagram
+  profiles {
+    uuid userId PK
+    varchar displayName
+    varchar role
+  }
+  quizzes {
+    uuid id PK
+    uuid ownerId FK
+    varchar title
+  }
+  questions {
+    uuid id PK
+    uuid quizId FK
+    int position
+    varchar kind
+    jsonb options
+    jsonb correctIndexes
+  }
+  game_sessions {
+    uuid id PK
+    varchar code UK
+    uuid quizId FK
+    uuid hostId FK
+    varchar status
+    int currentIndex
+  }
+  session_questions {
+    uuid id PK
+    uuid sessionId FK
+    uuid originalQuestionId FK
+    int position
+    varchar status
+    timestamptz closesAt
+    timestamptz reviewEndsAt
+    timestamptz scoredAt
+  }
+  session_participants {
+    uuid id PK
+    uuid sessionId FK
+    uuid userId FK
+    varchar displayName
+  }
+  answers {
+    uuid id PK
+    uuid sessionQuestionId FK
+    uuid participantId FK
+    boolean choice
+    smallint choiceIndex
+    timestamptz answeredAt
+    int score
+  }
+  game_results {
+    uuid id PK
+    uuid sessionId FK
+    uuid participantId FK
+    int totalScore
+    int rank
+  }
+  active_session_memberships {
+    uuid userId PK,FK
+    uuid sessionId FK
+  }
+  question_batch_operations {
+    uuid userId PK,FK
+    uuid quizId PK,FK
+    uuid operationId PK
+    varchar payloadHash
+  }
+
+  profiles ||--o{ quizzes : owner
+  quizzes ||--o{ questions : contains
+  profiles ||--o{ game_sessions : host
+  quizzes o|--o{ game_sessions : source
+  game_sessions ||--o{ session_questions : copies
+  game_sessions ||--o{ session_participants : has
+  session_questions ||--o{ answers : receives
+  session_participants ||--o{ answers : submits
+  game_sessions ||--o{ game_results : produces
+  session_participants ||--o{ game_results : ranks
+  profiles ||--o{ session_participants : joins
+  profiles ||--o{ active_session_memberships : reserves
+  game_sessions ||--o{ active_session_memberships : active
+  quizzes ||--o{ question_batch_operations : batches

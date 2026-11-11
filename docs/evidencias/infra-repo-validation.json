@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-11T17:31:55.466Z",
+  "filesInspected": 127,
+  "actualSecretMatches": 0,
+  "privateEnvFilesIncluded": false,
+  "officeLockFilesExcluded": true,
+  "applicationRepositoriesIncluded": false,
+  "docxReferencesOwnRepo": true,
+  "docxImages": 13,
+  "publishedModeWithoutSourcePathsPassed": true,
+  "stopRestartPreservedDatabase": true,
+  "utf8AndUtf16LogsChecked": true,
+  "originalTerminalWhitespacePreserved": true
+}

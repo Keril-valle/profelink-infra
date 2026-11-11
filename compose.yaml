@@ -1,0 +1,64 @@
+name: profelink
+
+# La base PostgreSQL NO se define aquí: se reutiliza el contenedor existente
+# indicado por PROFELINK_PG_CONTAINER, en una red externa compartida. No hay
+# volúmenes de BD en este Compose; `down` no elimina esa red ni la PostgreSQL.
+
+services:
+  api:
+    image: ${PROFELINK_API_IMAGE:-keril777/profelink-api:local-20261111-a28e5dd}
+    container_name: profelink-api-local
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: ${PROFELINK_DOCKER_DATABASE_URL:-}
+      DATABASE_SSL: "false"
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173,http://localhost:5174,http://localhost:8080,http://127.0.0.1:5173,http://127.0.0.1:5174,http://127.0.0.1:8080}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+      SUPABASE_STORAGE_BUCKET: ${SUPABASE_STORAGE_BUCKET:-question-images}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-flash}
+      DEEPSEEK_TIMEOUT_MS: ${DEEPSEEK_TIMEOUT_MS:-60000}
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-profelink-api}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_HEADERS: ${OTEL_EXPORTER_OTLP_HEADERS:-}
+      OTEL_EXPORTER_OTLP_PROTOCOL: ${OTEL_EXPORTER_OTLP_PROTOCOL:-http/protobuf}
+    networks:
+      - default
+      - database
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"require('http').get('http://127.0.0.1:3000/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\"",
+        ]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped
+
+  web:
+    image: ${PROFELINK_WEB_IMAGE:-keril777/profelink-web:local-20261111-38b014f}
+    container_name: profelink-web-local
+    ports:
+      - "8080:80"
+    # La imagen publicada usa localhost; Nginx escucha por IPv4.
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  database:
+    external: true
+    name: ${PROFELINK_PG_NETWORK:-profelink-data}

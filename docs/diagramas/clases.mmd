@@ -1,0 +1,95 @@
+classDiagram
+  direction LR
+
+  class Profile {
+    +uuid userId
+    +string displayName
+    +string avatarId
+    +string role
+  }
+  class Quiz {
+    +uuid id
+    +uuid ownerId
+    +string title
+    +string description
+    +string imageKey
+  }
+  class Question {
+    +uuid id
+    +uuid quizId
+    +string statement
+    +string kind
+    +boolean correctBoolean
+    +json options
+    +json correctIndexes
+    +int position
+  }
+  class GameSession {
+    +uuid id
+    +string code
+    +uuid hostId
+    +string status
+    +int currentIndex
+    +Date startedAt
+    +Date finishedAt
+  }
+  class SessionQuestion {
+    +uuid id
+    +uuid sessionId
+    +int position
+    +string status
+    +Date openedAt
+    +Date closesAt
+    +Date closedAt
+    +Date reviewEndsAt
+    +Date scoredAt
+  }
+  class SessionParticipant {
+    +uuid id
+    +uuid sessionId
+    +uuid userId
+    +string displayName
+    +string avatarId
+  }
+  class Answer {
+    +uuid id
+    +uuid sessionQuestionId
+    +uuid participantId
+    +boolean choice
+    +smallint choiceIndex
+    +Date answeredAt
+    +int score
+  }
+  class GameResult {
+    +uuid id
+    +uuid sessionId
+    +uuid participantId
+    +int totalScore
+    +int rank
+  }
+  class ActiveSessionMembership {
+    +uuid userId
+    +uuid sessionId
+  }
+  class QuestionBatchOperation {
+    +uuid userId
+    +uuid quizId
+    +uuid operationId
+    +string payloadHash
+    +json receipt
+  }
+
+  Profile "1" --> "*" Quiz : owner
+  Quiz "1" --> "*" Question : contains
+  Profile "1" --> "*" GameSession : host
+  Quiz "0..1" --> "*" GameSession : source
+  GameSession "1" --> "*" SessionQuestion : copies
+  GameSession "1" --> "*" SessionParticipant : has
+  SessionQuestion "1" --> "*" Answer : receives
+  SessionParticipant "1" --> "*" Answer : submits
+  GameSession "1" --> "*" GameResult : produces
+  SessionParticipant "1" --> "*" GameResult : ranks
+  Profile "1" --> "*" SessionParticipant : joins
+  Profile "1" --> "*" ActiveSessionMembership : reserves
+  GameSession "1" --> "*" ActiveSessionMembership : active
+  Quiz "1" --> "*" QuestionBatchOperation : batches

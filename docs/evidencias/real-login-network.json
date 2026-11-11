@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-11T14:07:26.007Z",
+  "url": "http://127.0.0.1:8080/app/curso",
+  "mockBanner": false,
+  "apiStatuses": [
+    200,
+    200,
+    200
+  ],
+  "network": "profelink-data",
+  "screenshot": "real-dashboard-network.png"
+}

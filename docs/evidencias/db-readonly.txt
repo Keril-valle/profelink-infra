@@ -1,0 +1,36 @@
+﻿Pager usage is off.
+    database    |    usuario     
+----------------+----------------
+ profelink_test | profelink_test
+(1 row)
+
+ connectivity 
+--------------
+            1
+(1 row)
+
+ quizzes 
+---------
+       1
+(1 row)
+
+ sessions 
+----------
+        2
+(1 row)
+
+ participants 
+--------------
+           60
+(1 row)
+
+ answers 
+---------
+     161
+(1 row)
+
+ results 
+---------
+      60
+(1 row)
+

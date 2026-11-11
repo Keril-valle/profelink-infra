@@ -1,0 +1,16 @@
+﻿{
+    "backendStatus":  [
+                          "## main...origin/main"
+                      ],
+    "frontendStatus":  [
+                           "## main...origin/main",
+                           " M Dockerfile"
+                       ],
+    "referenceStatusMatchesPrevious":  true,
+    "backendProtectedChanges":  [
+
+                                ],
+    "frontendProtectedChanges":  [
+
+                                 ]
+}

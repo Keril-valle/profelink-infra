@@ -1,0 +1,19 @@
+# Repositorio de infraestructura: no versionar clones de aplicaciones.
+/Back-Proyecto2/
+/kahoot_front_grupo2/
+/investigacion-webhooks-infra-/
+
+# Configuración local y secretos. Solo se versiona el ejemplo.
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Temporales, dependencias y archivos abiertos de Office.
+/.tmp/
+node_modules/
+*.log
+~$*.docx
+.DS_Store

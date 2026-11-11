@@ -1,0 +1,3 @@
+﻿NAME                  IMAGE                 COMMAND                  SERVICE   CREATED         STATUS                        PORTS
+profelink-api-local   profelink-api:local   "docker-entrypoint.sÔÇª"   api       2 minutes ago   Up 2 minutes (healthy)        0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+profelink-web-local   profelink-web:local   "/docker-entrypoint.ÔÇª"   web       2 minutes ago   Up About a minute (healthy)   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
